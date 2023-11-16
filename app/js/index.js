@@ -30,6 +30,7 @@ function parseFieldsFromXml(xmlDoc) {
     const itemTitle = item.querySelector("title").textContent;
     const itemDesc = item.querySelector("description").textContent;
     const itemLink = item.querySelector("link").textContent;
+    const itemDate = item.querySelector("pubDate").textContent;	  
     const doesItemExist = feedItems.findIndex(el => el.itemLink == itemLink);
 
     if (doesItemExist == -1) {
@@ -37,7 +38,9 @@ function parseFieldsFromXml(xmlDoc) {
         feedTitle: feedTitle,
         itemTitle: itemTitle,
         itemLink: itemLink,
-        itemDescr: itemDesc
+        itemDesc: itemDesc,
+	itemDate: itemDate 
+
       });
     }
   });
@@ -46,7 +49,7 @@ function parseFieldsFromXml(xmlDoc) {
     .map(feed => feed.feedTitle)
     .filter(getUniqueArrayValues);
 
-  renderHTML(feedItems, uniqueTitles);
+  renderHTML(feedItems.reverse(), uniqueTitles);
 }
 
 function getUniqueArrayValues(value, index, self) {
@@ -55,15 +58,16 @@ function getUniqueArrayValues(value, index, self) {
 
 function generateArticleMarkup(articles) {
   return `
-  <ul>
       ${articles.map(
         article =>
-          `<li>
-            <a href="${article.itemLink}" target="_blank"> ${article.itemTitle}
-            </a>
-          </li>`
+          `<div class="mb-2 box">
+	  <h3 class='subtitle'>${article.itemTitle}</h3>
+	  <em>${article.itemDate}</em>
+	   <p class='my-2'>${article.itemDesc}</p>
+            <a class='mb-2' href="${article.itemLink}" target="_blank">Ecouter le fichier 
+            </a></div>
+          `
       )}
-  </ul>
   `;
 }
 
@@ -77,7 +81,7 @@ function renderHTML(feedArticles, titles) {
     });
 
     const feedMarkup = `
-    <h4>${title}</h4>
+    <h1 class="title">${title}</h1>
       ${generateArticleMarkup(articlesPerTitle)
         .split(",")
         .join("")}

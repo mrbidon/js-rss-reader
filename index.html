@@ -5,15 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>RSS Reader</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 </head>
-<body>
-  <div class="feed">
-    <p>Please click Refresh to fetch feeds</p>
+<body onload="fetchFeedFile()">
+  <div class="feed container">
   </div>
-  
-  <button id="refreshBtn" onclick="fetchFeedFile()">Refresh feeds</button>
-
   <script src="app/js/index.js"></script>
 </body>
 </html>
